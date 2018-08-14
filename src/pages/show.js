@@ -6,8 +6,8 @@ class ShowPage extends React.Component {
 
         return (
             <div> 
-                <h1>{ note.title } </h1>
-                <div>{ note.body } </div>
+                <h1>{note.title}</h1>
+                <div>{note.body}</div>
             </div>
         )
     }
