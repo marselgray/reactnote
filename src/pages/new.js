@@ -3,12 +3,17 @@ import {Link} from 'react-router-dom';
 
 
 class NewPage extends React.Component {
-    state = {
-        note: {
-            title: '',
-            body: '',
-            createdAt: undefined,
-            updatedAt: undefined
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            note: {
+                title: '',
+                body: '',
+                createdAt: null,
+                updatedAt: null
+            },
+            saving: false
         }
     }
     
@@ -20,11 +25,12 @@ class NewPage extends React.Component {
         })
     }
 
-    handleSave = (e) => {
-        e.preventDefault();
+    async handleSave() {
+        this.setState({ saving: true });
 
-        const id = this.props.onSave(this.state.note);
-        this.props.history.replace(`/notes/${ id}`);
+        const res = await this.props.onSave({ ...this.state.note });
+
+        this.props.history.replace(`/notes/${ res.id }`)
     }
 
     render(){

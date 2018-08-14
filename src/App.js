@@ -1,38 +1,33 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter,
-  Route
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import IndexPage from './pages/index'
 import ShowPage from './pages/show';
 import Navbar from './components/navbar';
 import NewPage from './pages/new';
+import EditNotePage from './pages/edit';
+import DB from './db';
 
 class App extends Component {
   state = {
-    notes: {
-      1: {
-        _id: 1,
-        title: 'hello world',
-        body: 'this is the body',
-        updatedAt: new Date()
-      },
-      2: {
-        _id: 2,
-        title: 'hello world again',
-        body: 'this is the body again',
-        updatedAt: new Date()
-      }
-    }
+    db: new DB(),
+    notes: {},
+    loading: true
   }
 
-  handleSave = (note) => {
-    const ids = Object.keys(this.state.notes);
-    const id = Math.max(...ids) + 1;
+  async componentDidMount(){
+    const notes = await this.state.db.getAllNotes();
 
-    note['_id'] = id;
-    
+    this.setState({
+      notes,
+      loading: false
+    });
+  }
+
+  handleSave = async (note) => {
+    let {id} = await this.state.db.createNote(note);
+   
+
     const { notes } = this.state;
 
     this.setState({
@@ -46,18 +41,48 @@ class App extends Component {
   }
 
 
+  async handleDelete(id) {
+    let { notes } = this.state;
+    let note = notes[id];
+
+    if (notes[id] && window.confirm("Are you sure you want to delete this note?")) {
+      await this.state.db.deleteNote(note);
+
+      delete notes[id];
+      
+      this.setState({ notes });
+    }
+  }
+
+  renderContent() {
+    if (this.state.loading) {
+      return <h2>Loading...</h2>
+    }
+
+    return (
+      <div className="app-content">
+        <Route exact path="/" component={(props) => <IndexPage {...props} notes={this.state.notes}/>} />
+        <Route exact path="/notes/:id" component={(props) => (
+          <ShowPage {...props} note={this.state.notes[props.match.params.id]} onDelete={(id) => this.handleDelete(id) }/>
+          ) } />
+        <Route path="/notes/:id/edit" component={(props) => (
+          <EditNotePage {...props} note={this.state.notes[props.match.params.id]} onSave={(note) => this.handleSave(note, 'updateNote') }/>
+          ) } />
+        <Route path="/new" component={(props) => (
+          <NewPage {...props} onSave={(note) => this.handleSave(note, 'createNote')} />
+        )} />
+      </div>
+    );
+  }
+
   render() {
     return (
-      <BrowserRouter>
+      <Router>
         <div className="App">
           <Navbar />
-          <div className='app-content'>
-            <Route exact path='/' component={(props) => <IndexPage {...props} notes={this.state.notes}/> }/>
-            <Route exact path='/notes/:id' component={(props) => <ShowPage {...props} note={this.state.notes[props.match.params.id]} /> }/>
-            <Route exact path='/new' component={(props) => <NewPage {...props} onSave={this.handleSave} /> }/>
-          </div>
+          { this.renderContent() }
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

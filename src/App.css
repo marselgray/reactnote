@@ -1,5 +1,10 @@
 * {
-    font-family: 'Merienda', cursive;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+}
+
+h1, h3 {
+    text-align: center;
 }
 
 #root, .App {
