@@ -10,10 +10,3 @@ pouchDB is an open-source JavaScript database that allows developers to build ap
 
 if cloning down: run npm install
 
-
-Planning
-
-Stage 1:
-
-Stage 2: 
-
