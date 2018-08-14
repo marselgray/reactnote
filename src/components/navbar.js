@@ -7,9 +7,9 @@ class Navbar extends React.Component{
         return (
             <nav className='navbar'>
                 <h1><Link to='/'>Chalk Talk</Link></h1>
-                <h3> Your Personal Note Keeper </h3>
+                <h4> Your Personal Note Keeper </h4>
                 <div className='navbar-buttons'>
-                    <Link to='/new' className='btn'>Create A New Note</Link>
+                    <Link to='/new' className='btn'>Write Another Note</Link>
                 </div>
             </nav>
         );

@@ -29,7 +29,7 @@
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid black;
 }
 
 .note-form-field textarea {
@@ -38,8 +38,8 @@
 }
 
 .note-form-buttons input {
-    padding: 15px;
-    background: #66f;
+    padding: 5px;
+    background: green;
     border: none;
     border-radius: 5px;
     color: #fff;

@@ -37,7 +37,7 @@ class NewPage extends React.PureComponent {
 
         return (
             <div className="note-form">
-                <h1>Create Note</h1>
+                <h4>Write Your Next Note Here</h4>
                 <form onSubmit={(e) => { e.preventDefault(); this.handleSave(); }}>
                     <div className="note-form-field">
                         <label>Title</label>
