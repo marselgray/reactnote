@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+
 class NewPage extends React.Component {
     state = {
         note: {
@@ -42,7 +43,7 @@ class NewPage extends React.Component {
                     </div>
                     <div classname='note-form-button'>
                         <button className='btn'>Save Note</button>
-                        <Link to='/'>Cancel Note</Link>
+                        <Link className='btn' to='/'>Cancel Note</Link>
                     </div>
                 </form>
             </div>
