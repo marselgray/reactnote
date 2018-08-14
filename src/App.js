@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter,
+  Route
+} from 'react-router-dom';
 import './App.css';
 import IndexPage from './pages/index'
+import ShowPage from './pages/show';
+import Navbar from './components/navbar';
 
 class App extends Component {
   state = {
@@ -21,9 +27,15 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
-        <IndexPage notes={this.state.notes}/>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Navbar />
+          <div className='app-content'>
+            <Route exact path='/' component={(props) => <IndexPage {...props} notes={this.state.notes}/> }/>
+            <Route exact path='/notes/:id' component={(props) => <ShowPage {...props} note={this.state.notes[props.match.params.id]} /> } />
+          </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }
