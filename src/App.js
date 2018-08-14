@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import IndexPage from './pages/index'
 
 class App extends Component {
+  state = {
+    notes: {
+      1: {
+        _id: 1,
+        title: 'hello world',
+        body: 'this is the body',
+        updatedAt: new Date()
+      },
+      2: {
+        _id: 2,
+        title: 'hello world again',
+        body: 'this is the body again',
+        updatedAt: new Date()
+      }
+    }
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <IndexPage notes={this.state.notes}/>
       </div>
     );
   }
