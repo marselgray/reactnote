@@ -20,6 +20,8 @@ class ShowPage extends React.PureComponent {
         return (
             <div>
                 <h1>{ note.title }</h1>
+                <div>{note.body}</div>
+                <br/><br/><br/>
                 <div className="note-created">
                     <Link className="note-edit" to={`/notes/${note._id}/edit`}>Edit</Link>
                     <button className="btn" onClick={ (e) => this.props.onDelete(note._id) }>Delete</button>
