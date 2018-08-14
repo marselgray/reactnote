@@ -1,8 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import "./form.css";
 
-class NewPage extends React.Component {
+class NewPage extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -16,14 +17,6 @@ class NewPage extends React.Component {
             saving: false
         }
     }
-    
-    updateValue = (e) => {
-        const { note } = this.state;
-
-        this.setState({
-            note: {...note, [e.target.name]: e.target.value}
-        })
-    }
 
     async handleSave() {
         this.setState({ saving: true });
@@ -33,23 +26,29 @@ class NewPage extends React.Component {
         this.props.history.replace(`/notes/${ res.id }`)
     }
 
-    render(){
+    updateValue(e) {
+        let { note } = this.state;
+
+        this.setState({ note: { ...note, [e.target.name]: e.target.value }});
+    }
+
+    render() {
         const { note } = this.state;
 
         return (
-            <div className='note-form'> 
-                <h1> Create Note </h1>
-                <form onSubmit={this.handleSave}>
-                    <div className='note-form-field'>
+            <div className="note-form">
+                <h1>Create Note</h1>
+                <form onSubmit={(e) => { e.preventDefault(); this.handleSave(); }}>
+                    <div className="note-form-field">
                         <label>Title</label>
-                        <input type='text' name='title' value={note.title} onChange={this.updateValue}/>
+                        <input type="text" name="title" value={note.title} onChange={(e) => this.updateValue(e)} />
                     </div>
-                    <div className='note-form-field note-form-field-text'>
-                        <textarea name='body' value={note.body} onChange={this.updateValue} />
+                    <div className="note-form-field note-form-field-text">
+                        <textarea name="body" value={note.body} onChange={(e) => this.updateValue(e)} />
                     </div>
-                    <div classname='note-form-button'>
-                        <button className='btn'>Save Note</button>
-                        <Link className='btn' to='/'>Cancel Note</Link>
+                    <div className="note-form-buttons">
+                        <input type="submit" value="Save" />
+                        <Link to={`/`}>Cancel</Link>
                     </div>
                 </form>
             </div>
@@ -57,5 +56,4 @@ class NewPage extends React.Component {
     }
 }
 
-
-export default NewPage
+export default NewPage;

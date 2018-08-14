@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import "./form.css";
 
-class ShowPage extends React.Component {
+class ShowPage extends React.PureComponent {
+
     componentWillMount() {
         if (!this.props.note) {
             this.props.history.replace(`/`);
@@ -10,9 +10,7 @@ class ShowPage extends React.Component {
         }
     }
 
-    
-    
-    render(){
+    render() {
         const { note } = this.props;
 
         if (!note) {
